@@ -23,10 +23,12 @@ def add_user(user: User):
     return user
 
 @app.put("/api/users/{user_id}", status_code=status.HTTP_202_ACCEPTED)
-def update_user(user: User):
-    if any(u.user_id == user.user_id for u in users):
-        users.remove()
-    
-    user.append()
+def update_user(user_id: int, user: User):
+    for i, u in enumerate(users): 
+        if u.user_id == user_id:
+            users[i] = user 
+            return user
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
     
     

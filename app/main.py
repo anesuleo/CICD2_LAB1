@@ -4,6 +4,10 @@ from .schemas import User
 app = FastAPI()
 users: list[User] = []
 
+@app.get("/health")
+def get_health():
+    return {"status": "ok"}
+
 @app.get("/api/users")
 def get_users():
     return users
@@ -37,5 +41,5 @@ def delete_user(user_id: int):
             users.remove(u)
             return    
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-            
+
     
